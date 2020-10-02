@@ -1,0 +1,5 @@
+---
+# handlers file for roles/windows_dns_server
+
+- name: restart machine
+  win_reboot:
