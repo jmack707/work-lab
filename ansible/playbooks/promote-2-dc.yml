@@ -1,0 +1,11 @@
+---
+    - name: Windows Baseline
+      hosts: labdc
+      connection: winrm
+      gather_facts: true
+    
+      tasks:
+    
+        - name: Promote to DC
+          include_role:
+            name: config.dc
