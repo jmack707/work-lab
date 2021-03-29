@@ -1,9 +1,0 @@
----
-  - name: Windows Baseline
-    hosts: labdc
-    connection: winrm
-    gather_facts: true
-    
-    roles:
-      - windows_dns_server
-      - windows_domain_controller

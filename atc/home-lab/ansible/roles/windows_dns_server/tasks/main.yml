@@ -1,5 +1,0 @@
----
-# tasks file for roles/windows_dns_server
-
-- include: features.yml
-- include: reboot.yml

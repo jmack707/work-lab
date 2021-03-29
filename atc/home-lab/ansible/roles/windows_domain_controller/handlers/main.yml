@@ -1,5 +1,0 @@
----
-# handlers file for windows_domain_controller
-
-- name: restart machine
-  win_reboot:
