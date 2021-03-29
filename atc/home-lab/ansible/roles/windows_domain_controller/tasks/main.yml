@@ -1,0 +1,5 @@
+---
+# tasks file for windows_domain_controller
+
+- include: create.yml
+- include: reboot.yml 

@@ -1,0 +1,14 @@
+ansible_user: Administrator
+ansible_password: Bigip123
+ansible_port: 5986
+ansible_connection: winrm
+ansible_winrm_server_cert_validation: ignore
+
+
+# Domain Controller
+windows_domain_controller_info:
+  dns_domain_name: 1broken.net
+  domain_admin_password: Bigip123 
+  domain_admin_user: Administrator@1broken.net
+  safe_mode_password: Bigip123
+  state: domain_controller
