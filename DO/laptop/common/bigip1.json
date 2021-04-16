@@ -28,7 +28,7 @@
         "myNtp": {
             "class": "NTP",
             "servers": [
-                "pool.ntp.org"
+                "10.1.10.1"
             ],
             "timezone": "UTC"
         },
