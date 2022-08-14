@@ -1,0 +1,56 @@
+myJWT=$(cat /vagrant_data/nginx-plus/nginx-repo.jwt)
+
+kubectl create ns nginx-ingress
+kubectl create secret docker-registry regcred --docker-server=private-registry.nginx.com --docker-username=$myJWT --docker-password=none -n nginx-ingress
+
+kubectl get secret regcred --output=yaml -ns nginx-ingress
+
+
+git clone https://github.com/nginxinc/kubernetes-ingress.git --branch v2.3.0
+cd kubernetes-ingress/deployments
+
+Configure RBAC
+kubectl apply -f common/ns-and-sa.yaml
+kubectl apply -f rbac/rbac.yaml
+kubectl apply -f rbac/ap-rbac.yaml
+kubectl apply -f rbac/apdos-rbac.yaml
+
+Create Common Resources
+kubectl apply -f common/default-server-secret.yaml
+kubectl apply -f common/nginx-config.yaml
+kubectl apply -f common/ingress-class.yaml
+
+Create Custom Resources
+kubectl apply -f common/crds/k8s.nginx.org_virtualservers.yaml
+kubectl apply -f common/crds/k8s.nginx.org_virtualserverroutes.yaml
+kubectl apply -f common/crds/k8s.nginx.org_transportservers.yaml
+kubectl apply -f common/crds/k8s.nginx.org_policies.yaml
+
+TCP and UDP
+kubectl apply -f common/crds/k8s.nginx.org_globalconfigurations.yaml
+
+Resources for NGINX App Protect
+kubectl apply -f common/crds/appprotect.f5.com_aplogconfs.yaml
+kubectl apply -f common/crds/appprotect.f5.com_appolicies.yaml
+kubectl apply -f common/crds/appprotect.f5.com_apusersigs.yaml
+
+Resources for NGINX App Protect deployments
+kubectl apply -f common/crds/appprotect.f5.com_aplogconfs.yaml
+kubectl apply -f common/crds/appprotect.f5.com_appolicies.yaml
+kubectl apply -f common/crds/appprotect.f5.com_apusersigs.yaml
+
+Deploy Arbitrator for NGINX App Protect DoS
+kubectl apply -f deployment/appprotect-dos-arb.yaml
+kubectl apply -f service/appprotect-dos-arb-svc.yaml
+
+Run the Ingress Controller
+
+      imagePullSecrets: 
+      - name: regcred 
+      containers: 
+      - image: private-registry.nginx.com/nginx-ic/nginx-plus-ingress:2.2.0 
+
+kubectl apply -f deployment/nginx-plus-ingress.yaml
+
+curl --resolve cafe.example.com:80:10.1.20.30 https://cafe.example.com:80/coffee --insecure
+

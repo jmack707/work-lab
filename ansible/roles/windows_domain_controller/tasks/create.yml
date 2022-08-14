@@ -27,7 +27,7 @@
     - name: Setting DNS Servers
       win_dns_client:
         adapter_names: "*"
-        ipv4_addresses: "10.1.20.65"
+        ipv4_addresses: "20.1.20.65"
     
     - name: Managing Domain Controller Membership
       win_domain_controller:

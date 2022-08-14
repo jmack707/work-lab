@@ -28,14 +28,14 @@
         "myNtp": {
             "class": "NTP",
             "servers": [
-                "10.1.10.1"
+                "10.1.20.1"
             ],
             "timezone": "UTC"
         },
         "myProvisioning": {
             "class": "Provision",
             "ltm": "nominal",
-            "apm": "nominal"
+            "gtm": "nominal"
         },
         "internal": {
             "class": "VLAN",
@@ -75,7 +75,7 @@
         },
         "default": {
             "class": "Route",
-            "gw": "10.1.10.1",
+            "gw": "10.1.20.1",
             "network": "default",
             "mtu": 1500
         },
